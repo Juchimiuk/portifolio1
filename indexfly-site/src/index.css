@@ -1,0 +1,14 @@
+@import "tailwindcss";
+/* styles/globals.css */
+
+/* Chrome, Safari e Opera */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Firefox */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
