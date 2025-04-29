@@ -4,7 +4,7 @@ import React from 'react';
 const partners = [
   'LogoLeo.png',
   'AgustaLogo.png',
-  '/images/logos/airbus.svg',
+  'logoindexadm.png',
   '/images/logos/boeing.svg',
  
 ];

@@ -11,4 +11,12 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
+
+  /* desativa toda rolagem no documento */
+html,
+body {
+  overflow-x: hidden;
+}
+
+  
   
