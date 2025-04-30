@@ -18,7 +18,7 @@ const BookImgSection: React.FC = () => (
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <h2 className="text-4xl font-bold text-sky-900 mb-4">
-          ksdaksdbaksa KASdjK
+          XXXXXXXXXXXXX XXXXXX
         </h2>
         <p className="text-gray-600 mb-6">
           A IndexFly oferece o que há de melhor em inovação para uma experiência de voo superior. Sinta-se confortável e seguro todos os dias, em qualquer lugar.
