@@ -10,6 +10,8 @@ import ScreenSection from './sections/ScreenSections';
 import { BookSection } from './sections/BookSectiontxt';
 import HomeSection from './sections/HomeSection';
 import BookImgSection from './sections/BookSections';
+import ContactSection from './sections/contact';
+import { AboutSection } from './sections/about';
 
 const HomePage: React.FC = () => {
   return (
@@ -36,6 +38,10 @@ const HomePage: React.FC = () => {
 
         {/* E-book / Livro */}
         <BookSection />
+
+        <AboutSection />
+
+        <ContactSection />
       </main>
 
       <Footer />

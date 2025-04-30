@@ -27,7 +27,7 @@ const Header: React.FC = () => {
 
   const toggleMenu = () => setMenuOpen(prev => !prev);
 
-  const headerBg = scrolled ? 'bg-sky-950 shadow-md' : 'bg-sky-950 s';
+  const headerBg = scrolled ? 'bg-gradient-to-l from-sky-900 to-sky-950' : 'bg-gradient-to-l from-sky-900 to-sky-950';
   const linkClass = scrolled
     ? 'text-white hover:text-gray-200'
     : 'text-white hover:text-blue-600';
@@ -73,7 +73,7 @@ const Header: React.FC = () => {
           aria-label="Toggle menu"
         >
           <svg
-            className={`w-6 h-6 ${scrolled ? 'text-white' : 'text-gray-700'}`}
+            className={`w-6 h-6 ${scrolled ? 'text-white' : 'text-white'}`}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
