@@ -45,8 +45,13 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <img
-          className="w-36"
+          className="w-36 hidden md:block"
           src="indexfly.png"
+          alt="IndexFly Logo"
+        />
+        <img
+          className="w-12 block md:hidden"
+          src="favicon.png"
           alt="IndexFly Logo"
         />
 

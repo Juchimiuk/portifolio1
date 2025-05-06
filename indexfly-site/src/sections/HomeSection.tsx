@@ -13,14 +13,12 @@ const HeroSection: React.FC = () => {
             <div className="absolute inset-0 bg-black/50" />
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
 
-                {/* Logo animado vindo da esquerda */}
-
-
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 flex justify-center items-center">
-                    Bem-vindo ao <motion.img
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 flex flex-col sm:flex-row justify-center items-center text-center">
+                    Bem-vindo ao 
+                    <motion.img
                         src="/indexfly.png"
                         alt="IndexFly Logo"
-                        className="w-60 pt-4 pl-2"
+                        className="w-40 sm:w-60 pt-4 sm:pt-0 sm:pl-2"
                         initial={{ x: 200, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ type: 'spring', stiffness: 90, delay: 0.5 }}

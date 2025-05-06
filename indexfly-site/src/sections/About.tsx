@@ -3,7 +3,7 @@ import React from 'react';
 export const AboutSection: React.FC = () => (
     <section id="ebook" className="bg-white py-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-8">
-            <div className="lg:w-1/2 flex justify-center">
+            <div className="lg:w-1/2 flex justify-center sm:hidden">
                 <img
                     src="livro.png"
                     alt="Capa do e-book IndexFly"
@@ -24,6 +24,13 @@ export const AboutSection: React.FC = () => (
                         Projetado para reduzir a carga administrativa de pilotos e gestores, o IndexFly transforma a complexidade da gestão aérea em um processo fluido, eficiente e profissional. Tudo isso com foco em segurança, organização e transparência.
                     </p>
                 </div>
+                <div className="lg:w-1/2 flex justify-center md:hidden">
+                <img
+                    src="livro.png"
+                    alt="Capa do e-book IndexFly"
+                    className="w-64 sm:w-72 md:w-84 h-auto rounded-lg shadow-md"
+                />
+            </div>
             </div>
             {/* Imagem do Livro */}
 
