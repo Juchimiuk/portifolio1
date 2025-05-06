@@ -2,8 +2,8 @@ import React from 'react';
 
 export const AboutSection: React.FC = () => (
     <section id="ebook" className="bg-white py-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-8">
-            <div className="lg:w-1/2 flex justify-center sm:hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center ">
+            <div className="lg:w-1/2 pl-20 justify-center  hidden md:block">
                 <img
                     src="livro.png"
                     alt="Capa do e-book IndexFly"
