@@ -23,7 +23,7 @@ const ContactInfoSection: React.FC = () => (
           transition={{ delay: 0.2 }}>
           <FaEnvelope className="text-sky-900 w-8 h-8 mb-4 hover:scale-110 duration-300" />
           <h3 className="text-xl font-semibold mb-2">E-mail</h3>
-          <p className="text-gray-600 text-sm ">atendimento@indexadm.com.br</p>
+          <p className="text-gray-600 text-sm pr-5 ">atendimento@indexadm.com.br</p>
         </motion.div>
         <motion.div
           className="flex flex-col items-center"
