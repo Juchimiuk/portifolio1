@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 export const AboutSection: React.FC = () => (
-  <section id="ebook" className="bg-white px-4 sm:px-8">
-    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+  <section id="ebook" className="bg-white ">
+    <div className="max-w-7xl  flex flex-col lg:flex-row items-center gap-12">
       {/* Imagem do E-book */}
       <motion.div
         className="w-full lg:w-2/5 flex justify-center"
