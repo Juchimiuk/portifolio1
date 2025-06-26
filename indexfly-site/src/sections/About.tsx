@@ -1,39 +1,28 @@
-import { motion } from 'framer-motion';
 import React from 'react';
 
 export const AboutSection: React.FC = () => (
-  <section id="ebook" className="bg-white ">
-    <div className="max-w-7xl  flex flex-col lg:flex-row items-center gap-12">
+  <section id="ebook" className="bg-gradient-to-b from-sky-100 via-white to-blue-50 py-12">
+    <div className="max-w-7xl flex flex-col lg:flex-row items-center gap-10 container mx-auto px-4">
       {/* Imagem do E-book */}
-      <motion.div
-        className="w-full lg:w-2/5 flex justify-center"
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        viewport={{ once: false, amount: 0.3 }}
-      >
-        <img
-          src="helicopterscreen2.png"
-          alt="Capa do e-book IndexFly"
-          className="w-64 sm:w-80 md:w-full h-auto shadow-lg"
-        />
-      </motion.div>
+      <div className="w-full lg:w-2/5 flex justify-center mb-8 lg:mb-0">
+        <div className="bg-white bg-opacity-80 rounded-xl shadow-md p-4 flex items-center justify-center">
+          <img
+            src="helicopterscreen2.png"
+            alt="Capa do e-book IndexFly"
+            className="w-40 sm:w-56 md:w-full h-auto shadow rounded-lg"
+          />
+        </div>
+      </div>
 
       {/* Livro Financeiro e Funcionalidades */}
-      <div className="w-full lg:w-3/5 lg:pr-10">
-        <motion.h2
-          className="text-2xl sm:text-3xl font-bold text-center lg:text-left text-sky-900 mb-8"
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -30 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          viewport={{ once: false, amount: 0.3 }}
+      <div className="w-full lg:w-3/5 lg:pr-6 bg-white bg-opacity-80 rounded-xl shadow-md p-6">
+        <h2
+          className="text-xl sm:text-2xl font-bold text-center lg:text-left text-sky-900 mb-6 uppercase tracking-wide drop-shadow-lg"
         >
           Livro Financeiro & Gestão de Aeronaves
-        </motion.h2>
+        </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {[
             {
               num: '01',
@@ -60,28 +49,22 @@ export const AboutSection: React.FC = () => (
                 'Monitore voos por sócio ou cliente, acompanhe consumo médio de combustível e tempos totais de voo.',
             },
           ].map((item, idx) => (
-            <motion.div
+            <div
               key={idx}
-              className="flex flex-col sm:flex-row p-6 bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition-transform"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              transition={{ type: 'spring', stiffness: 100, damping: 16 }}
-              viewport={{ once: false, amount: 0.3 }}
-              whileHover={{ scale: 1.03 }}
+              className="flex flex-col sm:flex-row p-4 bg-blue-50 rounded-xl shadow hover:shadow-md transition-transform"
             >
-              <div className="flex-shrink-0 mb-4 sm:mb-0">
-                <span className="text-sky-600 font-md text-3xl">
+              <div className="flex-shrink-0 mb-2 sm:mb-0">
+                <span className="text-sky-600 font-md text-xl">
                   {item.num}
                 </span>
               </div>
-              <div className="sm:ml-4">
-                <h3 className="text-lg sm:text-xl font-bold text-sky-800 mb-2">
+              <div className="sm:ml-3">
+                <h3 className="text-base sm:text-lg font-bold text-sky-800 mb-1">
                   {item.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+                <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

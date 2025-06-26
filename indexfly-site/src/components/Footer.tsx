@@ -5,7 +5,7 @@ const Footer: React.FC = () => (
     <div className='flex'>
       <img className="w-10 ml-5" src="favicon.png" alt="Logo Index Fly" />
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center">
-        <span className="text-sm">&copy; {new Date().getFullYear()} IndexFly. Todos os direitos reservados.</span>
+        <span className="text-sm">&copy; {new Date().getFullYear()} INDEXFLY. Todos os direitos reservados.</span>
       </div>
     </div>
   </footer>
