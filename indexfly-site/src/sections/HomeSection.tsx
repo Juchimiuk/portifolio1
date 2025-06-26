@@ -13,14 +13,14 @@ const HeroSection: React.FC = () => {
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 uppercase drop-shadow-lg">
           Seja bem-vindo
         </h1>
-        <p className="text-lg md:text-2xl text-white mb-8 font-medium drop-shadow-md">
+        <p className="text-lg md:text-2xsl text-white mb-8 font-medium drop-shadow-md">
           Simplificamos a gestão de operação aérea de aeronaves executivas e
           compartilhadas, oferecendo uma experiência intuitiva, moderna e fácil de
           usar.
         </p>
         <a
           href="#features"
-          className="inline-block bg-white text-sky-900 font-bold px-8 py-4 rounded-full shadow-lg hover:bg-sky-900 hover:text-white transition text-lg"
+          className="inline-block bg-white text-sky-900 font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-sky-900 hover:text-white transition text-md"
           onClick={e => {
             e.preventDefault();
             const section = document.getElementById('features');

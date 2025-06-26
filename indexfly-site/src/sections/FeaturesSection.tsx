@@ -50,7 +50,7 @@ export const FeaturesSection: React.FC = () => (
     <section id="features" className="py-20">
         <div className="container mx-auto px-4">
             <h2
-                className="text-3xl sm:text-4xl font-extrabold text-center mb-12 text-sky-900 tracking-tight"
+                className="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-sky-900 tracking-tight"
             >
                 Nossas Funcionalidades
             </h2>

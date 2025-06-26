@@ -8,7 +8,8 @@ import { SiPix } from 'react-icons/si';
 export const WorkflowSection: React.FC = () => (
   <section id="how-it-works" className="py-20">
     <div className="container mx-auto px-4">
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-sky-900 mb-12 tracking-tight">Nossas Funcionalidades</h2>
+      {/* text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight drop-shadow-lg */}
+      <h2 className="text-4xl sm:text-5xl font-extrabold text-center text-sky-900 mb-12 tracking-tight">Nossas Funcionalidades</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Primeira linha de caixas */}
         <div className="flex flex-col items-center bg-white text-center p-8 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300">

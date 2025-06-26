@@ -9,7 +9,6 @@ import ScreenSection from './sections/ScreenSections';
 import { BookSection } from './sections/BookSectiontxt';
 import HomeSection from './sections/HomeSection';
 import ContactSection from './sections/contact';
-import { AboutSection } from './sections/About';
 
 const HomePage: React.FC = () => {
   return (
@@ -31,7 +30,6 @@ const HomePage: React.FC = () => {
 
         {/* E-book / Livro */}
         <BookSection />
-        <AboutSection />
         {/* Seção em branco entre BookSection e Contato */}
         <section className="h-10 bg-transparent" aria-hidden="true"></section>
         <ContactSection />
