@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import ProjectsSection from './sections/FeaturesSection';
 
 import HomeSection from './sections/HomeSection';
+import ResumeSection from './sections/ResumeSection';
 
 const HomePage: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const HomePage: React.FC = () => {
 
         {/* Funcionalidades */}
         <ProjectsSection  />
+        <ResumeSection />
       </main>
 
       <Footer />
