@@ -86,6 +86,9 @@ const ResumeSection: React.FC = () => {
             <h3 className="flex items-center gap-3 text-lg font-semibold text-white">
               <span className="text-white/80">Perfil</span>
             </h3>
+            <div>''
+              <img src="/juckIcon2.png" alt="juckIcon2" className="h-20 w-20 object-cover" />
+            </div>
 
             <p className="mt-4 text-sm leading-relaxed text-white/80">
               Desenvolvedor com experiência em aplicações web, foco em React, TypeScript e boas práticas de engenharia de software. Gosto de projetar interfaces claras e performáticas.

@@ -40,7 +40,7 @@ const HeroSection: React.FC = () => {
           <div className="grid w-full grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <h1
-                className={`mt-10 text-[3.2rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[4.2rem] md:text-[5.2rem] transform transition-transform duration-700 ease-out ${
+                className={`mt-10 text-[3.2rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[4.2rem] md:text-[3.2rem] transform transition-transform duration-700 ease-out ${
                   visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               >
