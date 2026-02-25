@@ -52,13 +52,8 @@ const ResumeSection: React.FC = () => {
   );
 
   return (
-    <section id="resume" className="relative overflow-hidden bg-slate-950">
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2D] via-[#0F2A44] to-[#123A66]" />
-        <div className="absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-black/20 blur-3xl" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/40" />
-      </div>
+    <section id="resume" className="relative overflow-hidden ">
+      
 
       <div className="relative z-10 mx-auto max-w-[78rem] px-6 py-16 sm:px-8 sm:py-20">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

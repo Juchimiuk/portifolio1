@@ -87,20 +87,20 @@ const ProjectsSection: React.FC = () => {
   const featured = filtered.find((p) => p.featured) || filtered[0];
 
   return (
-    <section id="projects" className="relative overflow-hidden bg-slate-950">
+    <section id="projects" className="relative overflow-hidden ">
       {/* Fundo coerente com o Hero */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2D] via-[#0F2A44] to-[#123A66]" />
-        <div className="absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-black/20 blur-3xl" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/40" />
+      <div className="fixed inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('public/bgGray.jpg')" }}
+        />
       </div>
 
       <div className="relative z-10 mx-auto max-w-[78rem] px-6 py-16 sm:px-8 sm:py-20">
         {/* Cabeçalho */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-semibold tracking-[0.22em] text-white/70">
+            <p className="text-sm font-semibold tracking-[0.22em] text-orange-500">
               PORTFÓLIO
             </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
@@ -113,7 +113,7 @@ const ProjectsSection: React.FC = () => {
 
           {/* Busca */}
           <div className="mt-3 w-full sm:mt-0 sm:w-[360px]">
-            <div className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white/90 shadow-lg shadow-black/20 backdrop-blur">
+            <div className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white/90 shadow-2xl shadow-black/50 backdrop-blur-2xl">
               <FaMagnifyingGlass className="h-4 w-4 text-white/60" />
               <input
                 value={query}
@@ -138,7 +138,7 @@ const ProjectsSection: React.FC = () => {
                   "rounded-full px-4 py-2 text-xs font-semibold transition",
                   "border backdrop-blur",
                   active
-                    ? "border-white/25 bg-white text-[#123A66] shadow-lg shadow-black/15"
+                    ? "border-white/25 bg-white text-gray-900 shadow-lg shadow-black/15"
                     : "border-white/15 bg-white/10 text-white/85 hover:bg-white/15",
                 ].join(" ")}
               >
@@ -153,13 +153,6 @@ const ProjectsSection: React.FC = () => {
           <div className="mt-10 rounded-3xl border border-white/15 bg-white/10 shadow-2xl shadow-black/30 backdrop-blur">
             <div className="grid grid-cols-1 gap-0 lg:grid-cols-12">
               <div className="lg:col-span-7 p-6 sm:p-8">
-                <div className="flex items-center gap-2">
-                  <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/85">
-                    Destaque
-                  </span>
-                  <span className="text-xs text-white/60">Projeto em evidência</span>
-                </div>
-
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                   {featured.title}
                 </h3>
@@ -181,7 +174,7 @@ const ProjectsSection: React.FC = () => {
                 <div className="mt-7 flex flex-wrap items-center gap-3">
                   <a
                     href={featured.href || "#"}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#123A66] shadow-lg shadow-black/25 transition hover:bg-white/90 focus:outline-none focus:ring-4 focus:ring-white/25"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-600  px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/25 transition hover:bg-white/90 focus:outline-none focus:ring-4 focus:ring-white/25"
                     target="_blank"
                     rel="noreferrer"
                   >

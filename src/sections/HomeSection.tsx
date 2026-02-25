@@ -11,26 +11,24 @@ const HeroSection: React.FC = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden bg-slate-950"
+      className="relative min-h-screen overflow-hidden "
     >
       {/* Fundo estilo da referência */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1C2D] via-[#0F2A44] to-[#123A66]" />
-        {/* Glow suave */}
-        <div className="absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-black/20 blur-3xl" />
-        {/* Vinheta para dar profundidade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/35" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('public/bgGray.jpg')" }}
+        />
       </div>
 
       {/* Conteúdo */}
       <div className="relative z-10 mx-auto flex min-h-screen max-w-[78rem] flex-col px-6 pt-10 sm:px-8">
         {/* Marca pequena no topo */}
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold tracking-[0.22em] text-white/85">
+          <span className="text-sm font-semibold tracking-[0.22em] text-orange-600">
             JUCHIMIUK
           </span>
-          <span className="text-xs px-4 py-2 rounded-full font-semibold tracking-[0.22em] text-white/85 hover:bg-[#ffffff] hover:text-[#123A66] cursor-pointer duration-200">
+          <span className="text-xs px-4 py-2 rounded-full font-semibold tracking-[0.22em] text-orange-600 hover:bg-[#ffffff] hover:text-[#123A66] cursor-pointer duration-200">
             ENTRE EM CONTATO
           </span>
         </div>
@@ -62,7 +60,7 @@ const HeroSection: React.FC = () => {
               <div className="mt-10 flex flex-wrap items-center gap-3">
                 <a
                   href="/curriculo.pdf"
-                  className={`inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#123A66] shadow-lg shadow-black/25 transform transition-transform duration-700 ease-out delay-200 ${
+                  className={`inline-flex items-center justify-center rounded-full bg-orange-600 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-black/25 transform transition-transform duration-700 ease-out delay-200 ${
                     visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                   }`}
                 >
