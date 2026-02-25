@@ -92,7 +92,7 @@ const ProjectsSection: React.FC = () => {
       <div className="fixed inset-0">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('public/bgGray.jpg')" }}
+          style={{ backgroundImage: "url('/bgGray.jpg')" }}
         />
       </div>
 
