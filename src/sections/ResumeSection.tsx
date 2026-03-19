@@ -53,8 +53,7 @@ const ResumeSection: React.FC = () => {
 
   return (
     <section id="resume" className="relative overflow-hidden ">
-      
-
+    
       <div className="relative z-10 mx-auto max-w-[78rem] px-6 py-16 sm:px-8 sm:py-20">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>

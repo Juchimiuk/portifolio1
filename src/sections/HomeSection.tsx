@@ -28,7 +28,7 @@ const HeroSection: React.FC = () => {
           <span className="text-sm font-semibold tracking-[0.22em] text-orange-600">
             JUCHIMIUK
           </span>
-          <span className="text-xs px-4 py-2 rounded-full font-semibold tracking-[0.22em] text-orange-600 hover:bg-[#ffffff] hover:text-[#123A66] cursor-pointer duration-200">
+          <span className="text-xs px-4 py-2 rounded-full font-semibold tracking-[0.22em] text-orange-600 hover:bg-[#ffffffec] hover:text-orange-500 cursor-pointer duration-200">
             ENTRE EM CONTATO
           </span>
         </div>
