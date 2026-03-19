@@ -18,14 +18,14 @@ const ProjectsSection: React.FC = () => {
     () => [
       {
         id: "p1",
-        title: "Dashboard de Operações Aéreas",
+        title: "TripLanso - Planejador de Viagens",
         description:
-          "Painel web responsivo para acompanhar voos, status e métricas, com foco em performance e UX.",
-        tags: ["React", "TypeScript", "Tailwind", "UI, UX"],
-        href: "#",
-        repo: "#",
+          "Plataforma Web para planejar viagens, criar roteiros personalizados e compartilhar experiências, com foco em UI moderna e responsiva.",
+        tags: ["React", "TypeScript", "Tailwind", "UI, UX, Componentização"],
+        href: "https://trip-lanso.vercel.app/",
+        repo: "https://github.com/Juchimiuk/TripLanso",
         featured: true,
-        image: "/projects/project-1.png",
+        image: "./TripLanso.png",
       },
       {
         id: "p2",
