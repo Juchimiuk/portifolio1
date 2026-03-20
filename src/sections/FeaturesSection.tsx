@@ -25,7 +25,7 @@ const ProjectsSection: React.FC = () => {
         href: "https://trip-lanso.vercel.app/",
         repo: "https://github.com/Juchimiuk/TripLanso",
         featured: true,
-        image: "./TripLanso.png",
+        image: "public/TripLanso.png",
       },
       {
         id: "p2",
@@ -197,13 +197,8 @@ const ProjectsSection: React.FC = () => {
                   {/* Placeholder visual, troque por imagem real quando tiver */}
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(79,163,255,0.35),transparent_55%)]" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.14),transparent_60%)]" />
-                  <div className="relative p-6">
-                    <div className="h-44 sm:h-56 w-full rounded-xl border border-white/10 bg-white/5" />
-                    <div className="mt-4 space-y-2">
-                      <div className="h-3 w-2/3 rounded bg-white/10" />
-                      <div className="h-3 w-5/6 rounded bg-white/10" />
-                      <div className="h-3 w-1/2 rounded bg-white/10" />
-                    </div>
+                  <div className="relative p-2">
+                    <img src={featured.image} alt={featured.title} className="rounded-lg"  />
                   </div>
                 </div>
               </div>
