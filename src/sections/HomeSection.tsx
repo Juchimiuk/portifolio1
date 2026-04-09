@@ -17,7 +17,7 @@ const HeroSection: React.FC = () => {
       <div className="absolute inset-0">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('public/bgGray.jpg')" }}
+          style={{ backgroundImage: "url('/bgGray.jpg')" }}
         />
       </div>
 
@@ -44,7 +44,7 @@ const HeroSection: React.FC = () => {
               >
                 Desenvolvedor
                 <br />
-                Front End Junior
+                Front End 
               </h1>
 
               <p

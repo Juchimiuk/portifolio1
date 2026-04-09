@@ -46,7 +46,7 @@ const HeroSection: React.FC = () => {
               >
                 Desenvolvedor
                 <br />
-                Front End Junior
+                Front End 
               </h1>
 
               <p

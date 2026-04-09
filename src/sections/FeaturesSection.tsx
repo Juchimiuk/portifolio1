@@ -25,7 +25,7 @@ const ProjectsSection: React.FC = () => {
         href: "https://trip-lanso.vercel.app/",
         repo: "https://github.com/Juchimiuk/TripLanso",
         featured: true,
-        image: "public/TripLanso.png",
+        image: "/TripLanso.png",
       },
       {
         id: "p2",
