@@ -66,10 +66,11 @@ const ResumeSection: React.FC = () => {
 
           <div className="mt-4 sm:mt-0">
             <a
-              href="#"
+              href="/curriculo.pdf"
+              download
               className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#123A66] shadow-lg shadow-black/25 transition hover:bg-white/90"
             >
-              <FaDownload className="h-4 w-4" />
+              <FaDownload className="h-4 w-4" aria-hidden="true" />
               Baixar CV
             </a>
           </div>
@@ -80,8 +81,12 @@ const ResumeSection: React.FC = () => {
             <h3 className="flex items-center gap-3 text-lg font-semibold text-white">
               <span className="text-white/80">Perfil</span>
             </h3>
-            <div>''
-              <img src="/juckIcon2.png" alt="juckIcon2" className="h-20 w-20 object-cover" />
+            <div className="mt-4">
+              <img
+                src="/juckIcon2.png"
+                alt="Foto de perfil de Juchimiuk"
+                className="h-20 w-20 rounded-full object-cover"
+              />
             </div>
 
             <p className="mt-4 text-sm leading-relaxed text-white/80">
@@ -93,10 +98,22 @@ const ResumeSection: React.FC = () => {
                 <strong className="text-white/90">Local:</strong> Santa Catarina, Brasil
               </div>
               <div>
-                <strong className="text-white/90">Email:</strong> juchimiukDev@gmail.com
+                <strong className="text-white/90">Email:</strong>{" "}
+                <a
+                  href="mailto:juchimiukDev@gmail.com"
+                  className="text-white/85 underline-offset-2 hover:text-white hover:underline"
+                >
+                  juchimiukDev@gmail.com
+                </a>
               </div>
               <div>
-                <strong className="text-white/90">Número:</strong> (+55) 98847-8664
+                <strong className="text-white/90">Número:</strong>{" "}
+                <a
+                  href="tel:+55988478664"
+                  className="text-white/85 underline-offset-2 hover:text-white hover:underline"
+                >
+                  (+55) 98847-8664
+                </a>
               </div>
               <div>
                 <strong className="text-white/90">Disponibilidade:</strong> A ver

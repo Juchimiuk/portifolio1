@@ -1,26 +1,22 @@
 import React from 'react';
-// src/index.tsx ou pages/_app.tsx
 import './index.css';
+import Header from './components/Header';
 import Footer from './components/Footer';
-import ProjectsSection from './sections/FeaturesSection';
-
 import HomeSection from './sections/HomeSection';
+import ProjectsSection from './sections/FeaturesSection';
 import ResumeSection from './sections/ResumeSection';
+import ContactSection from './sections/ContactSection';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="">
-      {/* <Header /> */}
-
-      <main className="">
-        {/* Hero / Home */}
+    <div>
+      <Header />
+      <main>
         <HomeSection />
-
-        {/* Funcionalidades */}
-        <ProjectsSection  />
+        <ProjectsSection />
         <ResumeSection />
+        <ContactSection />
       </main>
-
       <Footer />
     </div>
   );

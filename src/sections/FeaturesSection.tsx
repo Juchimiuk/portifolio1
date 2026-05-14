@@ -66,8 +66,6 @@ const ProjectsSection: React.FC = () => {
     });
   }, [projects, query, activeTag]);
 
-  const featured = filtered.find((p) => p.featured) || filtered[0];
-
   return (
     <section id="projects" className="relative overflow-hidden ">
       {/* Fundo coerente com o Hero */}
@@ -96,11 +94,17 @@ const ProjectsSection: React.FC = () => {
           {/* Busca */}
           <div className="mt-3 w-full sm:mt-0 sm:w-[360px]">
             <div className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white/90 shadow-2xl shadow-black/50 backdrop-blur-2xl">
-              <FaMagnifyingGlass className="h-4 w-4 text-white/60" />
+              <FaMagnifyingGlass className="h-4 w-4 text-white/60" aria-hidden="true" />
+              <label htmlFor="project-search" className="sr-only">
+                Buscar projetos
+              </label>
               <input
+                id="project-search"
+                type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Buscar projeto, stack ou feature..."
+                aria-label="Buscar projetos por nome, stack ou feature"
                 className="w-full bg-transparent text-sm outline-none placeholder:text-white/50"
               />
             </div>

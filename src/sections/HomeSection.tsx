@@ -22,17 +22,7 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Conteúdo */}
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-[78rem] flex-col px-6 pt-10 sm:px-8">
-        {/* Marca pequena no topo */}
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold tracking-[0.22em] text-orange-600">
-            JUCHIMIUK
-          </span>
-          <span className="text-xs px-4 py-2 rounded-full font-semibold tracking-[0.22em] text-orange-600 hover:bg-[#ffffffec] hover:text-orange-500 cursor-pointer duration-200">
-            ENTRE EM CONTATO
-          </span>
-        </div>
-
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-[78rem] flex-col px-6 pt-24 sm:px-8">
         {/* Grid para manter aquele espaço grande da direita */}
         <div className="flex flex-1 items-center">
           <div className="grid w-full grid-cols-1 lg:grid-cols-12">
