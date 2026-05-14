@@ -18,44 +18,26 @@ const ProjectsSection: React.FC = () => {
     () => [
       {
         id: "p1",
+        title: "EasyFinance - Gerenciador Financeiro ",
+        description:
+          "Interface Web para gerenciar finanças pessoais, com funcionalidades de lançamento, categorização e relatórios, dashboards ao vivo.",
+        tags: ["React", "TypeScript", "APIs", "Componentização", "UI | UX", "Tailwind"],
+        href: "#",
+        repo: "#",
+        image: "/EasyFinance1.png",
+      },
+      {
+        id: "p2",
         title: "TripLanso - Planejador de Viagens",
         description:
           "Plataforma Web para planejar viagens, criar roteiros personalizados e compartilhar experiências, com foco em UI moderna e responsiva.",
-        tags: ["React", "TypeScript", "Tailwind", "UI, UX, Componentização"],
+        tags: ["React", "TypeScript", "Tailwind", "UI | UX","Componentização"],
         href: "https://trip-lanso.vercel.app/",
         repo: "https://github.com/Juchimiuk/TripLanso",
         featured: true,
         image: "/TripLanso.png",
       },
-      {
-        id: "p2",
-        title: "Sistema de Tickets e Atendimento",
-        description:
-          "Interface para abertura e acompanhamento de tickets com filtros, busca e estados bem definidos.",
-        tags: ["React", "Node", "APIs", "Componentização"],
-        href: "#",
-        repo: "#",
-        image: "/projects/project-2.png",
-      },
-      {
-        id: "p3",
-        title: "Landing Page de Produto",
-        description:
-          "Landing moderna com seções, animações leves e CTA, otimizada para conversão e SEO básico.",
-        tags: ["React", "Tailwind", "SEO", "Acessibilidade"],
-        href: "#",
-        repo: "#",
-        image: "/projects/project-3.png",
-      },
-      {
-        id: "p4",
-        title: "Gerenciador de Conteúdo Simples",
-        description:
-          "CRUD com formulários validados, listagem paginada e experiência consistente de usuário.",
-        tags: ["React", "TypeScript", "Forms", "Validação"],
-        href: "#",
-        repo: "#",
-      },
+     
     ],
     []
   );
@@ -149,62 +131,7 @@ const ProjectsSection: React.FC = () => {
         </div>
 
         {/* Destaque */}
-        {featured && (
-          <div className="mt-10 rounded-3xl border border-white/15 bg-white/10 shadow-2xl shadow-black/30 backdrop-blur">
-            <div className="grid grid-cols-1 gap-0 lg:grid-cols-12">
-              <div className="lg:col-span-7 p-6 sm:p-8">
-                <h3 className="mt-4 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                  {featured.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/80 sm:text-base">
-                  {featured.description}
-                </p>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {featured.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/85"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-7 flex flex-wrap items-center gap-3">
-                  <a
-                    href={featured.href || "#"}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-600  px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/25 transition hover:bg-white/90 focus:outline-none focus:ring-4 focus:ring-white/25"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Ver demo <FaArrowUpRightFromSquare className="h-4 w-4" />
-                  </a>
-
-                  <a
-                    href={featured.repo || "#"}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15 focus:outline-none focus:ring-4 focus:ring-white/20"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    GitHub <FaGithub className="h-4 w-4" />
-                  </a>
-                </div>
-              </div>
-
-              <div className="lg:col-span-5 p-6 sm:p-8">
-                <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-black/10">
-                  {/* Placeholder visual, troque por imagem real quando tiver */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(79,163,255,0.35),transparent_55%)]" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.14),transparent_60%)]" />
-                  <div className="relative p-2">
-                    <img src={featured.image} alt={featured.title} className="rounded-lg"  />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        
 
         {/* Grid de cards */}
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
