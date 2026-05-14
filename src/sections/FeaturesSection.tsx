@@ -37,7 +37,7 @@ const ProjectsSection: React.FC = () => {
         featured: true,
         image: "/TripLanso.png",
       },
-     
+
     ],
     []
   );
@@ -70,7 +70,7 @@ const ProjectsSection: React.FC = () => {
     <section id="projects" className="relative overflow-hidden ">
       {/* Fundo coerente com o Hero */}
       <div className="fixed inset-0">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/bgGray.jpg')" }}
         />
@@ -135,7 +135,7 @@ const ProjectsSection: React.FC = () => {
         </div>
 
         {/* Destaque */}
-        
+
 
         {/* Grid de cards */}
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
