@@ -83,13 +83,6 @@ const Header: React.FC = () => {
 
         <div className="flex items-center gap-2">
           <a
-            href="#contact"
-            onClick={(e) => handleClick(e, "#contact")}
-            className="hidden px-3 text-sm font-medium text-white/80 transition hover:text-white md:inline-flex"
-          >
-            Contato
-          </a>
-          <a
             href="/curriculo.pdf"
             download
             className="hidden rounded-full bg-orange-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-orange-600 md:inline-flex"

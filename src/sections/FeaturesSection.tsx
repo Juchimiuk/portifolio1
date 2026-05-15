@@ -1,6 +1,12 @@
 // src/components/ProjectsSection.tsx
-import React, { useMemo, useState } from "react";
-import { FaArrowUpRightFromSquare, FaGithub, FaMagnifyingGlass } from "react-icons/fa6";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  FaArrowUpRightFromSquare,
+  FaGithub,
+  FaMagnifyingGlass,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa6";
 
 type Project = {
   id: string;
@@ -9,8 +15,80 @@ type Project = {
   tags: string[];
   href?: string;
   repo?: string;
-  image?: string;
+  images?: string[];
   featured?: boolean;
+};
+
+const Carousel: React.FC<{ images: string[]; title: string }> = ({ images, title }) => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [images.length]);
+
+  if (!images.length) return null;
+
+  const prev = () => setIndex((i) => (i - 1 + images.length) % images.length);
+  const next = () => setIndex((i) => (i + 1) % images.length);
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-black/30">
+      <div
+        className="flex transition-transform duration-500 ease-out"
+        style={{ transform: `translateX(-${index * 100}%)` }}
+      >
+        {images.map((src, i) => (
+          <img
+            key={src + i}
+            src={src}
+            alt={`${title} - imagem ${i + 1}`}
+            className="h-56 w-full flex-shrink-0 object-cover sm:h-64"
+            loading="lazy"
+          />
+        ))}
+      </div>
+
+      {images.length > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Imagem anterior"
+            className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white/90 backdrop-blur transition hover:bg-black/60"
+          >
+            <FaChevronLeft className="h-3.5 w-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Próxima imagem"
+            className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white/90 backdrop-blur transition hover:bg-black/60"
+          >
+            <FaChevronRight className="h-3.5 w-3.5" />
+          </button>
+
+          <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={`Ir para imagem ${i + 1}`}
+                className={[
+                  "h-1.5 rounded-full transition-all",
+                  i === index ? "w-5 bg-white" : "w-1.5 bg-white/50 hover:bg-white/80",
+                ].join(" ")}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 const ProjectsSection: React.FC = () => {
@@ -24,20 +102,19 @@ const ProjectsSection: React.FC = () => {
         tags: ["React", "TypeScript", "APIs", "Componentização", "UI | UX", "Tailwind"],
         href: "#",
         repo: "#",
-        image: "/EasyFinance1.png",
+        images: ["/EasyFinance1.png"],
       },
       {
         id: "p2",
         title: "TripLanso - Planejador de Viagens",
         description:
           "Plataforma Web para planejar viagens, criar roteiros personalizados e compartilhar experiências, com foco em UI moderna e responsiva.",
-        tags: ["React", "TypeScript", "Tailwind", "UI | UX","Componentização"],
+        tags: ["React", "TypeScript", "Tailwind", "UI | UX", "Componentização"],
         href: "https://trip-lanso.vercel.app/",
         repo: "https://github.com/Juchimiuk/TripLanso",
         featured: true,
-        image: "/TripLanso.png",
+        images: ["/TripLanso.png"],
       },
-
     ],
     []
   );
@@ -134,16 +211,19 @@ const ProjectsSection: React.FC = () => {
           })}
         </div>
 
-        {/* Destaque */}
-
-
-        {/* Grid de cards */}
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Grid de cards (2 colunas) */}
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
           {filtered.map((p) => (
             <article
               key={p.id}
-              className="group rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur transition hover:bg-white/[0.14]"
+              className="group flex flex-col rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur transition hover:bg-white/[0.14]"
             >
+              {p.images && p.images.length > 0 && (
+                <div className="mb-5">
+                  <Carousel images={p.images} title={p.title} />
+                </div>
+              )}
+
               <div className="flex items-start justify-between gap-3">
                 <h3 className="text-lg font-semibold text-white leading-snug">
                   {p.title}
