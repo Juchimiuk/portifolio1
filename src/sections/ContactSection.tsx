@@ -1,5 +1,7 @@
 import React from "react";
 import { FaEnvelope, FaWhatsapp, FaGithub, FaLinkedin, FaLocationDot } from "react-icons/fa6";
+import Reveal from "../components/Reveal";
+import ScrambleText from "../components/ScrambleText";
 
 type ContactLink = {
   label: string;
@@ -12,8 +14,8 @@ type ContactLink = {
 const contacts: ContactLink[] = [
   {
     label: "Email",
-    value: "juchimiukDev@gmail.com",
-    href: "mailto:juchimiukDev@gmail.com",
+    value: "juchimiukdev@gmail.com",
+    href: "mailto:juchimiukdev@gmail.com",
     icon: <FaEnvelope className="h-5 w-5" aria-hidden="true" />,
   },
   {
@@ -41,21 +43,29 @@ const contacts: ContactLink[] = [
 
 const ContactSection: React.FC = () => {
   return (
-    <section id="contact" className="relative overflow-hidden">
+    <section
+      id="contact"
+      data-blob="-0.20,0.14,1.05"
+      className="relative overflow-hidden"
+    >
       <div className="relative z-10 mx-auto max-w-[78rem] px-6 py-16 sm:px-8 sm:py-20">
-        <div className="max-w-2xl">
-          <p className="text-sm font-semibold tracking-[0.22em] text-orange-500">CONTATO</p>
+        <Reveal className="max-w-2xl">
+          <ScrambleText
+            as="p"
+            text="CONTATO"
+            className="block text-sm font-semibold tracking-[0.22em] text-orange-500"
+          />
           <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             Vamos conversar
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-white/85 sm:text-base">
             Aberto a oportunidades, projetos freelance e colaborações. Responde rápido pelos canais abaixo.
           </p>
-        </div>
+        </Reveal>
 
         <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {contacts.map((c) => (
-            <li key={c.label}>
+          {contacts.map((c, i) => (
+            <Reveal as="li" key={c.label} delay={i * 90}>
               <a
                 href={c.href}
                 target={c.external ? "_blank" : undefined}
@@ -72,7 +82,7 @@ const ContactSection: React.FC = () => {
                   <span className="text-sm font-medium text-white">{c.value}</span>
                 </span>
               </a>
-            </li>
+            </Reveal>
           ))}
         </ul>
 

@@ -2,54 +2,60 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Props = {
-  onFinish: () => void;
+  onFinish?: () => void;
 };
 
-const BG_URL = "/bgGray.jpg";
+/** Só na primeira visita da aba — revisitar não deve custar 2 segundos. */
+const SEEN_KEY = "juchimiuk:splash-seen";
+
+const hasSeen = () => {
+  try {
+    return sessionStorage.getItem(SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
 
 const SplashScreen: React.FC<Props> = ({ onFinish }) => {
-  const [showLogo, setShowLogo] = useState(true);
-  const [showBg, setShowBg] = useState(true);
-  const [imageReady, setImageReady] = useState(false);
-  const [minTimeReached, setMinTimeReached] = useState(false);
+  const [active, setActive] = useState(() => !hasSeen());
+  const [showLogo, setShowLogo] = useState(() => !hasSeen());
 
   useEffect(() => {
-    const img = new Image();
-    img.src = BG_URL;
-    if (img.complete) {
-      setImageReady(true);
-    } else {
-      img.onload = () => setImageReady(true);
-      img.onerror = () => setImageReady(true);
+    if (!active) return;
+
+    try {
+      sessionStorage.setItem(SEEN_KEY, "1");
+    } catch {
+      /* modo privado: só não memoriza */
     }
 
-    const minTimer = setTimeout(() => setMinTimeReached(true), 2200);
-    return () => clearTimeout(minTimer);
-  }, []);
+    // Trava o scroll enquanto o splash está na frente.
+    const prev = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
 
-  useEffect(() => {
-    if (imageReady && minTimeReached) {
-      const t1 = setTimeout(() => setShowLogo(false), 350);
-      const t2 = setTimeout(() => setShowBg(false), 500);
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-      };
-    }
-  }, [imageReady, minTimeReached]);
+    // Sem imagem pesada para esperar: o fundo agora é shader.
+    const t1 = setTimeout(() => setShowLogo(false), 1500);
+    const t2 = setTimeout(() => setActive(false), 1650);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      document.documentElement.style.overflow = prev;
+    };
+  }, [active]);
 
   return (
     <>
       <AnimatePresence onExitComplete={onFinish}>
-        {showBg && (
+        {active && (
           <motion.div
             key="splash-bg"
             initial={{ opacity: 1 }}
             exit={{
               opacity: 0,
-              transition: { duration: 0.8, ease: "easeInOut" },
+              transition: { duration: 0.7, ease: "easeInOut" },
             }}
-            className="fixed inset-0 z-[998] bg-[#111] overflow-hidden"
+            className="fixed inset-0 z-[998] overflow-hidden bg-[#0a0a0a]"
           >
             <div
               className="pointer-events-none absolute inset-0 opacity-30"
@@ -59,23 +65,23 @@ const SplashScreen: React.FC<Props> = ({ onFinish }) => {
               }}
             />
 
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <div className="h-12 sm:h-14 md:h-16" />
+            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+              <div className="h-16 sm:h-20 md:h-24" />
 
               <motion.div
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: 220, opacity: 1 }}
-                transition={{ delay: 1.0, duration: 0.9, ease: "easeOut" }}
+                transition={{ delay: 0.55, duration: 0.7, ease: "easeOut" }}
                 className="mt-6 h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent"
               />
 
               <motion.p
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.4, duration: 0.5 }}
+                transition={{ delay: 0.85, duration: 0.45 }}
                 className="mt-4 text-[0.7rem] font-semibold tracking-[0.4em] text-white/50"
               >
-                FRONT END DEVELOPER
+                DESENVOLVEDOR DE SOFTWARE
               </motion.p>
             </div>
           </motion.div>
@@ -83,15 +89,15 @@ const SplashScreen: React.FC<Props> = ({ onFinish }) => {
       </AnimatePresence>
 
       {showLogo && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center pointer-events-none">
+        <div className="pointer-events-none fixed inset-0 z-[1000] flex items-center justify-center">
           <motion.div
             layoutId="brand-logo"
             initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
-              opacity: { duration: 0.6, ease: "easeOut" },
-              y: { duration: 0.6, ease: "easeOut" },
-              filter: { duration: 0.6, ease: "easeOut" },
+              opacity: { duration: 0.5, ease: "easeOut" },
+              y: { duration: 0.5, ease: "easeOut" },
+              filter: { duration: 0.5, ease: "easeOut" },
               layout: { duration: 0.9, ease: [0.65, 0, 0.35, 1] },
             }}
             className="flex items-center gap-5"
