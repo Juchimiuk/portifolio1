@@ -1,23 +1,120 @@
 @import "tailwindcss";
-/* styles/globals.css */
 
 /* Chrome, Safari e Opera */
 .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Firefox */
-  .scrollbar-hide {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
+  display: none;
+}
 
-  /* desativa toda rolagem no documento */
+/* Firefox */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 html,
 body {
   overflow-x: hidden;
-  background-color: #111;
+  background-color: #0a0a0a;
 }
 
-  
-  
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------------------------------------------------------------
+   Fundo: uma esfera escura em CSS.
+   Tudo aqui é pintado uma vez. As únicas propriedades animadas são
+   transform e opacity, que o compositor resolve sem repintar nada.
+   --------------------------------------------------------------- */
+
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #0a0a0a;
+}
+
+/* Camada que responde ao scroll e ao mouse (transform via JS). */
+.bg-orb-wrap {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 54vmin;
+  height: 54vmin;
+  will-change: transform;
+}
+
+/* A esfera. Os gradientes fazem o papel da iluminação:
+   specular quente no alto-esquerda, rim laranja embaixo-direita,
+   e o corpo escurecendo para a borda — que é o que dá o volume. */
+.bg-orb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 34% 26%,
+      rgba(255, 240, 224, 0.26) 0%,
+      rgba(255, 240, 224, 0) 24%
+    ),
+    radial-gradient(
+      circle at 42% 34%,
+      rgba(196, 198, 210, 0.13) 0%,
+      rgba(196, 198, 210, 0) 56%
+    ),
+    radial-gradient(
+      circle at 74% 76%,
+      rgba(234, 88, 12, 0.2) 0%,
+      rgba(234, 88, 12, 0) 42%
+    ),
+    radial-gradient(
+      circle at 40% 34%,
+      #24242a 0%,
+      #18181d 42%,
+      #0f0f13 74%,
+      #0b0b0d 100%
+    );
+  box-shadow:
+    0 0 120px 30px rgba(234, 88, 12, 0.05),
+    inset -18px -26px 60px rgba(0, 0, 0, 0.55);
+  animation: orb-drift 64s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Deriva lenta o bastante para não competir com a leitura:
+   um ciclo completo leva pouco mais de um minuto. */
+@keyframes orb-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2.5%, -3%, 0) scale(1.035);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Vinheta estática: escurece os cantos e mantém o texto legível. */
+.bg-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(10, 10, 10, 0) 30%,
+    rgba(8, 8, 8, 0.55) 78%,
+    rgba(6, 6, 6, 0.85) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .bg-orb {
+    animation: none;
+  }
+}

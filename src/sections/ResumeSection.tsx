@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
-import { FaDownload, FaGraduationCap, FaBriefcase } from "react-icons/fa6";
+import { FaGraduationCap, FaBriefcase } from "react-icons/fa6";
+import Reveal from "../components/Reveal";
+import ScrambleText from "../components/ScrambleText";
 
 type Experience = {
   id: string;
@@ -26,7 +28,7 @@ const ResumeSection: React.FC = () => {
         company: "Index Administração de Condomínios",
         period: "2025 — Presente",
         description:
-          "Contratado como desenvolvedor com o maior foco em front-end para criar e manter aplicações web internas, focando em React e TypeScript.",
+          "Desenvolvimento e manutenção de aplicações web internas com React e TypeScript, incluindo integração com APIs e melhorias de performance.",
       },
     ],
     []
@@ -52,32 +54,28 @@ const ResumeSection: React.FC = () => {
   );
 
   return (
-    <section id="resume" className="relative overflow-hidden ">
-    
+    <section
+      id="resume"
+      data-blob="0.24,0.12,0.92"
+      className="relative overflow-hidden"
+    >
       <div className="relative z-10 mx-auto max-w-[78rem] px-6 py-16 sm:px-8 sm:py-20">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold tracking-[0.22em] text-white/70">SOBRE</p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Currículo e trajetória</h2>
-            <p className="mt-3 max-w-[52rem] text-sm leading-relaxed text-white/80 sm:text-base">
-              Minha jornada profissional, principais responsabilidades e formações.
-            </p>
-          </div>
-
-          <div className="mt-4 sm:mt-0">
-            <a
-              href="/curriculo.pdf"
-              download
-              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#123A66] shadow-lg shadow-black/25 transition hover:bg-white/90"
-            >
-              <FaDownload className="h-4 w-4" aria-hidden="true" />
-              Baixar CV
-            </a>
-          </div>
-        </div>
+        <Reveal>
+          <ScrambleText
+            as="p"
+            text="SOBRE"
+            className="block text-sm font-semibold tracking-[0.22em] text-white/70"
+          />
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            Currículo e trajetória
+          </h2>
+          <p className="mt-3 max-w-[52rem] text-sm leading-relaxed text-white/80 sm:text-base">
+            Minha jornada profissional, principais responsabilidades e formações.
+          </p>
+        </Reveal>
 
         <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-1 rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur">
+          <Reveal className="lg:col-span-1 rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur">
             <h3 className="flex items-center gap-3 text-lg font-semibold text-white">
               <span className="text-white/80">Perfil</span>
             </h3>
@@ -100,10 +98,10 @@ const ResumeSection: React.FC = () => {
               <div>
                 <strong className="text-white/90">Email:</strong>{" "}
                 <a
-                  href="mailto:juchimiukDev@gmail.com"
+                  href="mailto:juchimiukdev@gmail.com"
                   className="text-white/85 underline-offset-2 hover:text-white hover:underline"
                 >
-                  juchimiukDev@gmail.com
+                  juchimiukdev@gmail.com
                 </a>
               </div>
               <div>
@@ -119,10 +117,10 @@ const ResumeSection: React.FC = () => {
                 <strong className="text-white/90">Disponibilidade:</strong> A ver
               </div>
             </div>
-          </div>
+          </Reveal>
 
           <div className="lg:col-span-2 space-y-6">
-            <div className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur">
+            <Reveal delay={140} className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur">
               <div className="flex items-center justify-between">
                 <h3 className="flex items-center gap-3 text-lg font-semibold text-white">
                   <FaBriefcase className="h-5 w-5 text-white/90" />
@@ -144,9 +142,9 @@ const ResumeSection: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </Reveal>
 
-            <div className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur">
+            <Reveal delay={220} className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur">
               <h3 className="flex items-center gap-3 text-lg font-semibold text-white">
                 <FaGraduationCap className="h-5 w-5 text-white/90" />
                 Formação & Diplomas
@@ -168,7 +166,7 @@ const ResumeSection: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>

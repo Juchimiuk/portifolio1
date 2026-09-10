@@ -7,6 +7,8 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa6";
+import Reveal from "../components/Reveal";
+import ScrambleText from "../components/ScrambleText";
 
 type Project = {
   id: string;
@@ -18,6 +20,9 @@ type Project = {
   images?: string[];
   featured?: boolean;
 };
+
+/** "#" era usado como placeholder; não deve virar link clicável. */
+const hasLink = (href?: string): href is string => !!href && href !== "#";
 
 const Carousel: React.FC<{ images: string[]; title: string }> = ({ images, title }) => {
   const [index, setIndex] = useState(0);
@@ -144,29 +149,27 @@ const ProjectsSection: React.FC = () => {
   }, [projects, query, activeTag]);
 
   return (
-    <section id="projects" className="relative overflow-hidden ">
-      {/* Fundo coerente com o Hero */}
-      <div className="fixed inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/bgGray.jpg')" }}
-        />
-      </div>
-
+    <section
+      id="projects"
+      data-blob="-0.26,-0.06,1.15"
+      className="relative overflow-hidden"
+    >
       <div className="relative z-10 mx-auto max-w-[78rem] px-6 py-16 sm:px-8 sm:py-20">
         {/* Cabeçalho */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold tracking-[0.22em] text-orange-500">
-              PORTFÓLIO
-            </p>
+          <Reveal>
+            <ScrambleText
+              as="p"
+              text="PORTFÓLIO"
+              className="block text-sm font-semibold tracking-[0.22em] text-orange-500"
+            />
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
               Projetos em destaque
             </h2>
             <p className="mt-3 max-w-[52rem] text-sm leading-relaxed text-white/80 sm:text-base">
               Alguns projetos que mostram minha evolução, foco em UI, UX, performance e boas práticas.
             </p>
-          </div>
+          </Reveal>
 
           {/* Busca */}
           <div className="mt-3 w-full sm:mt-0 sm:w-[360px]">
@@ -213,10 +216,12 @@ const ProjectsSection: React.FC = () => {
 
         {/* Grid de cards (2 colunas) */}
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-          {filtered.map((p) => (
-            <article
+          {filtered.map((p, i) => (
+            <Reveal
               key={p.id}
-              className="group flex flex-col rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur transition hover:bg-white/[0.14]"
+              delay={i * 120}
+              className="group flex flex-col rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg shadow-black/20 backdrop-blur transition-colors hover:border-orange-500/40 hover:bg-white/[0.14]"
+              as="article"
             >
               {p.images && p.images.length > 0 && (
                 <div className="mb-5">
@@ -229,24 +234,28 @@ const ProjectsSection: React.FC = () => {
                   {p.title}
                 </h3>
                 <div className="flex items-center gap-2">
-                  <a
-                    href={p.repo || "#"}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white/85 transition hover:bg-white/15"
-                    title="Repositório"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <FaGithub className="h-4 w-4" />
-                  </a>
-                  <a
-                    href={p.href || "#"}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white/85 transition hover:bg-white/15"
-                    title="Demo"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <FaArrowUpRightFromSquare className="h-4 w-4" />
-                  </a>
+                  {hasLink(p.repo) && (
+                    <a
+                      href={p.repo}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white/85 transition hover:bg-white/15"
+                      title="Repositório"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <FaGithub className="h-4 w-4" />
+                    </a>
+                  )}
+                  {hasLink(p.href) && (
+                    <a
+                      href={p.href}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white/85 transition hover:bg-white/15"
+                      title="Demo"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <FaArrowUpRightFromSquare className="h-4 w-4" />
+                    </a>
+                  )}
                 </div>
               </div>
 
@@ -266,12 +275,26 @@ const ProjectsSection: React.FC = () => {
               </div>
 
               <div className="mt-6 flex items-center justify-between">
-                <span className="text-xs text-white/55">Clique para ver mais</span>
-                <span className="text-xs font-semibold text-white/70 group-hover:text-white transition">
-                  Detalhes
-                </span>
+                {hasLink(p.href) ? (
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group/cta inline-flex items-center gap-2 text-xs font-semibold text-orange-400 transition hover:text-orange-300"
+                  >
+                    Ver projeto ao vivo
+                    <FaArrowUpRightFromSquare className="h-3 w-3 transition-transform group-hover/cta:translate-x-0.5" />
+                  </a>
+                ) : (
+                  <span className="text-xs text-white/45">Em desenvolvimento</span>
+                )}
+                {p.featured && (
+                  <span className="rounded-full bg-orange-500/15 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-orange-300">
+                    Destaque
+                  </span>
+                )}
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
 
