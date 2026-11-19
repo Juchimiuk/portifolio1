@@ -1,93 +1,139 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { navHref, navItems, profile } from "../data/profile";
 
-type NavItem = { label: string; href: string };
-
-const navItems: NavItem[] = [
-  { label: "Home", href: "#home" },
-  { label: "Projetos", href: "#projects" },
-  { label: "Sobre", href: "#resume" },
-  { label: "Contato", href: "#contact" },
-];
-
-const smoothScrollTo = (id: string) => {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const y = el.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top: y, behavior: "smooth" });
-};
-
-const Header: React.FC = () => {
+/**
+ * Header flutuante em pílula. Transparente no topo; ao rolar ganha fundo,
+ * borda e sombra. Quando passa por cima de uma área escura (qualquer
+ * elemento com `data-dark`), inverte as cores para continuar legível.
+ */
+const Header: React.FC<{ home?: boolean }> = ({ home = true }) => {
+  const headerRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [onDark, setOnDark] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const darkEls = Array.from(document.querySelectorAll<HTMLElement>("[data-dark]"));
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > 16);
+      const h = headerRef.current;
+      if (!h) return;
+      const r = h.getBoundingClientRect();
+      const middle = r.top + 28; // meio da pílula (h-14)
+      setOnDark(
+        darkEls.some((el) => {
+          const d = el.getBoundingClientRect();
+          return d.top <= middle && d.bottom >= middle;
+        })
+      );
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith("#")) return;
-    e.preventDefault();
-    setOpen(false);
-    smoothScrollTo(href.slice(1));
-  };
+  // Marca no menu a seção que está no meio da tela.
+  useEffect(() => {
+    const sections = navItems
+      .map((n) => document.getElementById(n.id))
+      .filter((el): el is HTMLElement => !!el);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
+  // Fecha o menu mobile com Esc.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const dark = onDark && !open;
+
+  const pill = !scrolled && !open
+    ? "bg-transparent ring-transparent"
+    : dark
+      ? "bg-ink-soft/90 ring-white/10 shadow-lg shadow-black/30"
+      : "bg-surface/90 ring-line shadow-lg shadow-ink/[0.06]";
 
   return (
-    <header className="fixed top-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-[78rem] -translate-x-1/2">
+    <header
+      ref={headerRef}
+      className="fixed top-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2"
+    >
       <div
         className={[
-          "flex h-14 items-center justify-between rounded-full px-3 pl-6 transition-all duration-300",
-          scrolled
-            ? "bg-white/5 shadow-lg shadow-black/20 ring-1 ring-white/10 backdrop-blur-md"
-            : "bg-transparent shadow-none ring-0 backdrop-blur-0",
+          "flex h-14 items-center justify-between rounded-full pr-2 pl-6 ring-1 backdrop-blur-sm transition-[background-color,box-shadow,color] duration-300",
+          pill,
         ].join(" ")}
       >
-        <div className="flex items-center gap-8">
-          <a
-            href="#home"
-            onClick={(e) => handleClick(e, "#home")}
-            className="flex items-center"
-          >
-            <motion.div
-              layoutId="brand-logo"
-              transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }}
-              className="flex items-center gap-2"
-            >
-              <span className="text-base tracking-wide font-semibold text-orange-500">
-                JUCHIMIUK
-              </span>
-            </motion.div>
-          </a>
-        </div>
+        <a
+          href={home ? "#inicio" : "/"}
+          className={[
+            "font-display text-lg font-bold tracking-tight transition-colors duration-300",
+            dark ? "text-white" : "text-ink",
+          ].join(" ")}
+          onClick={() => setOpen(false)}
+        >
+          {profile.name}
+          <span className="text-signal">.</span>
+        </a>
 
-        <div>
-          <nav
-            className="hidden items-center gap-6 md:flex"
-            aria-label="Navegação principal"
-          >
-            {navItems.slice(1).map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleClick(e, item.href)}
-                className="text-sm font-medium text-white/80 transition hover:text-white"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
+        <nav aria-label="Navegação principal" className="hidden md:block">
+          <ul className="flex items-center gap-1">
+            {navItems.map((item) => {
+              const isActive = active === item.id;
+              return (
+                <li key={item.id}>
+                  <a
+                    href={navHref(item.id, home)}
+                    aria-current={isActive ? "true" : undefined}
+                    className={[
+                      "relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300",
+                      dark
+                        ? isActive ? "text-white" : "text-white/60 hover:text-white"
+                        : isActive ? "text-ink" : "text-graphite hover:text-ink",
+                    ].join(" ")}
+                  >
+                    {item.label}
+                    <span
+                      aria-hidden="true"
+                      className={[
+                        "absolute inset-x-4 -bottom-0.5 h-0.5 origin-left rounded-full bg-signal transition-transform duration-300",
+                        isActive ? "scale-x-100" : "scale-x-0",
+                      ].join(" ")}
+                    />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
 
         <div className="flex items-center gap-2">
           <a
-            href="/curriculo.pdf"
+            href={profile.cv}
             download
-            className="hidden rounded-full bg-orange-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-orange-600 md:inline-flex"
+            className={[
+              "hidden rounded-full px-5 py-2 text-sm font-semibold transition-colors duration-300 md:inline-flex",
+              dark ? "bg-white text-ink hover:bg-white/85" : "bg-ink text-white hover:bg-ink-soft",
+            ].join(" ")}
           >
-            Baixar CV
+            Baixar currículo
           </a>
 
           <button
@@ -95,29 +141,17 @@ const Header: React.FC = () => {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Fechar menu" : "Abrir menu"}
             aria-expanded={open}
-            aria-controls="mobile-nav"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white md:hidden"
+            aria-controls="menu-mobile"
+            className={[
+              "inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300 md:hidden",
+              dark ? "bg-white text-ink" : "bg-ink text-white",
+            ].join(" ")}
           >
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              aria-hidden="true"
-            >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               {open ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
               )}
             </svg>
           </button>
@@ -126,29 +160,32 @@ const Header: React.FC = () => {
 
       {open && (
         <nav
-          id="mobile-nav"
+          id="menu-mobile"
           aria-label="Navegação mobile"
-          className="mt-2 overflow-hidden rounded-3xl bg-white shadow-lg shadow-black/10 ring-1 ring-black/5 md:hidden"
+          className="mt-2 overflow-hidden rounded-3xl bg-surface shadow-lg shadow-ink/10 ring-1 ring-line md:hidden"
         >
-          <div className="flex flex-col p-3">
+          <ul className="flex flex-col p-3">
             {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleClick(e, item.href)}
-                className="rounded-2xl px-4 py-3 text-sm font-medium text-gray-800 hover:bg-gray-100"
-              >
-                {item.label}
-              </a>
+              <li key={item.id}>
+                <a
+                  href={navHref(item.id, home)}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-2xl px-4 py-3 font-display text-xl font-semibold text-ink hover:bg-paper"
+                >
+                  {item.label}
+                </a>
+              </li>
             ))}
-            <a
-              href="/curriculo.pdf"
-              download
-              className="mt-2 rounded-full bg-gray-900 px-5 py-3 text-center text-sm font-semibold text-white"
-            >
-              Baixar CV
-            </a>
-          </div>
+            <li>
+              <a
+                href={profile.cv}
+                download
+                className="mt-2 block rounded-full bg-ink px-5 py-3 text-center text-sm font-semibold text-white"
+              >
+                Baixar currículo
+              </a>
+            </li>
+          </ul>
         </nav>
       )}
     </header>
