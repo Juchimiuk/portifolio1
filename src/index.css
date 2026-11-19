@@ -1,120 +1,380 @@
 @import "tailwindcss";
 
-/* Chrome, Safari e Opera */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
+/* ---------------------------------------------------------------
+   Tokens. Usados como classes do Tailwind: bg-paper, text-ink,
+   border-line, text-signal-ink, font-display etc.
+   --------------------------------------------------------------- */
+@theme {
+  --color-paper: #f5f6f8; /* fundo principal, cinza frio bem claro */
+  --color-surface: #ffffff; /* cards e áreas elevadas */
+  --color-ink: #15171c; /* texto principal e faixas escuras */
+  --color-ink-soft: #23262e; /* superfícies dentro das faixas escuras */
+  --color-graphite: #596070; /* texto secundário (contraste 6:1 no paper) */
+  --color-line: #dde1e7; /* bordas e divisórias */
+  --color-signal: #e4570f; /* laranja da marca: detalhes e textos grandes */
+  --color-signal-strong: #c94a0a; /* fundo de botão (branco por cima passa AA) */
+  --color-signal-ink: #b23f06; /* laranja para texto pequeno no claro */
 
-/* Firefox */
-.scrollbar-hide {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-html,
-body {
-  overflow-x: hidden;
-  background-color: #0a0a0a;
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 /* ---------------------------------------------------------------
-   Fundo: uma esfera escura em CSS.
-   Tudo aqui é pintado uma vez. As únicas propriedades animadas são
-   transform e opacity, que o compositor resolve sem repintar nada.
+   Animações. Só transform e opacity: o compositor resolve sem
+   repintar, então roda liso mesmo em GPU integrada.
    --------------------------------------------------------------- */
 
-.bg-scene {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  background: #0a0a0a;
+/* Sequência de entrada do hero. Cada elemento define --d (atraso). */
+.enter {
+  opacity: 0;
+  animation: enter 900ms cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  animation-delay: var(--d, 0ms);
 }
 
-/* Camada que responde ao scroll e ao mouse (transform via JS). */
-.bg-orb-wrap {
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Divisória do hero que se "desenha" da esquerda para a direita. */
+.draw-line {
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: draw 1100ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Ponto de status pulsando. */
+.pulse-dot {
+  position: relative;
+}
+.pulse-dot::after {
+  content: "";
   position: absolute;
   inset: 0;
-  margin: auto;
-  width: 54vmin;
-  height: 54vmin;
-  will-change: transform;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: pulse 2.4s ease-out infinite;
 }
 
-/* A esfera. Os gradientes fazem o papel da iluminação:
-   specular quente no alto-esquerda, rim laranja embaixo-direita,
-   e o corpo escurecendo para a borda — que é o que dá o volume. */
-.bg-orb {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 34% 26%,
-      rgba(255, 240, 224, 0.26) 0%,
-      rgba(255, 240, 224, 0) 24%
-    ),
-    radial-gradient(
-      circle at 42% 34%,
-      rgba(196, 198, 210, 0.13) 0%,
-      rgba(196, 198, 210, 0) 56%
-    ),
-    radial-gradient(
-      circle at 74% 76%,
-      rgba(234, 88, 12, 0.2) 0%,
-      rgba(234, 88, 12, 0) 42%
-    ),
-    radial-gradient(
-      circle at 40% 34%,
-      #24242a 0%,
-      #18181d 42%,
-      #0f0f13 74%,
-      #0b0b0d 100%
-    );
-  box-shadow:
-    0 0 120px 30px rgba(234, 88, 12, 0.05),
-    inset -18px -26px 60px rgba(0, 0, 0, 0.55);
-  animation: orb-drift 64s ease-in-out infinite;
-  will-change: transform;
-}
-
-/* Deriva lenta o bastante para não competir com a leitura:
-   um ciclo completo leva pouco mais de um minuto. */
-@keyframes orb-drift {
+@keyframes pulse {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
+    opacity: 0.6;
   }
-  50% {
-    transform: translate3d(2.5%, -3%, 0) scale(1.035);
-  }
+  80%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(2.6);
+    opacity: 0;
   }
 }
 
-/* Vinheta estática: escurece os cantos e mantém o texto legível. */
-.bg-vignette {
+/* Revelação no scroll — um único IntersectionObserver liga a classe. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    transform 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition-delay: var(--d, 0ms);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Linha da trajetória: preenche conforme a seção passa pela tela.
+   Usa scroll-driven animation nativa; onde não existe, fica cheia. */
+.timeline-fill {
+  transform-origin: top;
+}
+@supports (animation-timeline: view()) {
+  .timeline-fill {
+    animation: fill-line linear both;
+    animation-timeline: --journey;
+    animation-range: entry 40% cover 60%;
+  }
+  .timeline {
+    view-timeline: --journey block;
+  }
+}
+
+@keyframes fill-line {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Hover em itens de lista: traço laranja entra pela esquerda, o texto
+   desliza e a linha de baixo se preenche. Só transform — leve.
+   Uso: .hover-line no item (com borda inferior) e .hover-slide no texto.
+   --------------------------------------------------------------- */
+.hover-line {
+  position: relative;
+  overflow: hidden;
+}
+.hover-line::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at 50% 45%,
-    rgba(10, 10, 10, 0) 30%,
-    rgba(8, 8, 8, 0.55) 78%,
-    rgba(6, 6, 6, 0.85) 100%
-  );
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--color-signal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hover-slide {
+  position: relative;
+  display: inline-block;
+  transition:
+    transform 400ms cubic-bezier(0.19, 1, 0.22, 1),
+    color 300ms;
+}
+.hover-slide::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -1.4rem;
+  width: 0.85rem;
+  height: 2px;
+  background: var(--color-signal);
+}
+@media (hover: hover) {
+  .hover-line:hover::after {
+    transform: scaleX(1);
+  }
+  .hover-line:hover .hover-slide {
+    transform: translateX(1.4rem);
+    color: #fff;
+  }
+  /* Variante para fundo claro. */
+  .hover-line:hover .hover-slide-light {
+    color: var(--color-ink);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Rodapé revelado por baixo (padrão ritza.com.br): o main desce por
+   cima dele com os cantos de baixo arredondados e avança 32px sobre
+   o rodapé para a curva aparecer contra o preto.
+   --------------------------------------------------------------- */
+main {
+  position: relative;
+  z-index: 2;
+  background: var(--color-paper);
+  border-radius: 0 0 32px 32px;
+  margin-bottom: -32px;
+  overflow: clip;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+}
+.site-footer.is-reveal {
+  position: sticky;
+  bottom: 0;
+}
+
+.footer-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  padding: 112px 0 48px;
+}
+.footer-brand {
+  grid-column: 1 / -1;
+}
+@media (min-width: 900px) {
+  .footer-panel {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    padding: 128px 0 64px;
+  }
+  .footer-brand {
+    grid-column: auto;
+  }
+}
+
+.footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px 9px 12px;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.1;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+.footer-badge svg {
+  width: 22px;
+  height: 22px;
+}
+.footer-badge small {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.6);
+}
+.footer-badge:hover {
+  background: rgb(255 255 255 / 0.08);
+  border-color: rgb(255 255 255 / 0.45);
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.footer-col a {
+  color: rgb(255 255 255 / 0.72);
+  font-size: 15px;
+  transition: color 0.2s;
+  overflow-wrap: anywhere;
+}
+.footer-col a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 32px;
+  padding: 24px 0;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+  font-size: 14px;
+  color: rgb(255 255 255 / 0.5);
+}
+.footer-pill {
+  color: #fff;
+  font-weight: 600;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin: -7px 0;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+.footer-pill:hover {
+  background: rgb(255 255 255 / 0.1);
+  border-color: rgb(255 255 255 / 0.5);
+}
+.footer-top {
+  color: rgb(255 255 255 / 0.72);
+}
+.footer-top:hover {
+  color: #fff;
+}
+@media (min-width: 640px) {
+  .footer-top {
+    margin-left: auto;
+  }
+}
+
+/* O nome gigante saindo pela base. O tamanho exato vem do script
+   (mede e escala até a largura toda); 29vw é só o ponto de partida. */
+.footer-word {
+  position: relative;
+  z-index: 0;
+  font: 800 29vw/0.78 var(--font-display);
+  text-align: center;
+  white-space: nowrap;
+  margin-bottom: -0.07em;
+  user-select: none;
+}
+/* Degradê em cada letra (e não na palavra) porque cada uma se move sozinha. */
+.footer-word-char {
+  display: inline-block;
+  background: linear-gradient(180deg, #5c2408, #170a03 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.footer-word.can-animate .footer-word-char {
+  transform: translateY(105%);
+  transition: transform 0.3s ease-in;
+}
+.footer-word.can-animate.is-up .footer-word-char {
+  transform: none;
+  transition: transform 0.9s cubic-bezier(0.2, 0.75, 0.25, 1) calc(var(--i, 0) * 90ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-
-  .bg-orb {
+  .enter,
+  .draw-line,
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
     animation: none;
+    transition: none;
+  }
+  .pulse-dot::after {
+    animation: none;
+  }
+  .timeline-fill {
+    animation: none;
+    transform: none;
   }
 }
